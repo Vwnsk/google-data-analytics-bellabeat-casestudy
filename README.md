@@ -37,5 +37,10 @@ The final phase consisted of translating the insights into business strategy. Ba
 
 Each recommendation was directly supported by data and focused on generating value for both the user and the company.
 
+## Visual Reports
+
+The analysis dashboard and visualizations are available in the [reports folder](reports/).
+
+For instructions on how to add JPG files and other images to the reports folder, please see the [Reports README](reports/README.md).
 
 ![Looker Estudo_de_Caso_TCC_Google_Coursera_page-0001](https://github.com/user-attachments/assets/5df1c0af-1666-47fc-b8ac-7e0c3cca3d7a)

@@ -1,0 +1,142 @@
+SELECT * 
+FROM `agile-infinity-324612.estudo_de_caso.dailyactivity`
+LIMIT 10;
+
+SELECT COUNT(*) AS total_de_linhas
+FROM `agile-infinity-324612.estudo_de_caso.dailyactivity`;
+
+SELECT COUNT(DISTINCT Id) AS numero_de_participantes
+FROM `agile-infinity-324612.estudo_de_caso.dailyactivity`;
+---
+SELECT * 
+FROM `agile-infinity-324612.estudo_de_caso.sleepday`
+LIMIT 10;
+
+SELECT COUNT(*) AS total_de_linhas
+FROM `agile-infinity-324612.estudo_de_caso.sleepday`;
+
+SELECT COUNT(DISTINCT Id) AS numero_de_participantes
+FROM `agile-infinity-324612.estudo_de_caso.sleepday`;
+---
+SELECT *
+FROM `agile-infinity-324612.estudo_de_caso.weightloginfo`
+LIMIT 10;
+
+SELECT COUNT(*) AS total_de_linhas
+FROM `agile-infinity-324612.estudo_de_caso.weightloginfo`;
+
+SELECT COUNT(DISTINCT Id) AS numero_de_participantes
+FROM `agile-infinity-324612.estudo_de_caso.weightloginfo`;
+---
+
+SELECT
+  Id,
+  ActivityDate,
+  FORMAT_DATE('%d/%m/%Y', PARSE_DATE('%Y-%m-%d', CAST(ActivityDate AS STRING))) AS data_formatada
+FROM `agile-infinity-324612.estudo_de_caso.dailyactivity`
+LIMIT 10;
+---
+
+SELECT
+  Id,
+  SleepDay AS datahora_original_texto,
+  PARSE_TIMESTAMP('%m/%d/%Y %I:%M:%S %p', SleepDay) AS datahora_formatada
+  FROM `agile-infinity-324612.estudo_de_caso.sleepday`
+  LIMIT 10;
+---
+
+CREATE OR REPLACE TABLE `agile-infinity-324612.estudo_de_caso.sleep_day_cleaned` AS (
+  SELECT
+  Id,
+  PARSE_TIMESTAMP('%m/%d/%Y %I:%M:%S %p', SleepDay) AS SleepTimestamp,
+  TotalSleepRecords,
+  TotalMinutesAsleep
+  TotalTimeInBed
+  FROM
+  `agile-infinity-324612.estudo_de_caso.sleepday`
+);
+---
+SELECT
+
+AVG(TotalSteps) AS media_de_passos,
+MIN(TotalSteps) AS min_de_passos,
+MAX(TotalSteps) AS max_de_passos,
+
+AVG(Calories) AS media_de_calorias,
+
+AVG(VeryActiveMinutes) AS media_minutos_muito_ativos,
+AVG(LightlyActiveMinutes) AS media_minutos_pouco_ativos,
+AVG(SedentaryMinutes) AS media_minutos_sedentarios
+FROM
+  `agile-infinity-324612.estudo_de_caso.dailyactivity`
+WHERE
+  TotalSteps > 0;
+---
+## Primeiro viés será que os usuários não usam o dispositivo o dia todo? Vamos descobrir!
+
+SELECT
+  VeryActiveMinutes,
+  FairlyActiveMinutes,
+  LightlyActiveMinutes,
+  SedentaryMinutes,
+  (VeryActiveMinutes + FairlyActiveMinutes + LightlyActiveMinutes + SedentaryMinutes) AS total_minutos_registrados
+FROM
+  `agile-infinity-324612.estudo_de_caso.dailyactivity`
+WHERE
+  TotalSteps > 0
+ORDER BY
+  total_minutos_registrados DESC
+LIMIT 50;
+
+## Tivemos como resultado o uso total de 1440 minutos, 24 horas, sendo assim, todos usaram o dia todo.
+---
+
+CREATE OR REPLACE TABLE `agile-infinity-324612.estudo_de_caso.sleep_day_cleaned` AS (
+  SELECT
+    Id,
+    PARSE_TIMESTAMP('%m/%d/%Y %I:%M:%S %p', SleepDay) AS SleepTimestamp,
+    TotalSleepRecords,
+    TotalMinutesAsleep, 
+    TotalTimeInBed
+  FROM
+    `agile-infinity-324612.estudo_de_caso.sleepday`
+);
+
+---
+
+SELECT
+  activity.Id,
+  activity.ActivityDate,
+  activity.SedentaryMinutes AS total_sedentario_dia,
+  sleep.TotalMinutesAsleep AS total_minutos_dormindo,
+  (activity.SedentaryMinutes - sleep.TotalMinutesAsleep) AS minutos_sedentarios_acordado
+FROM
+  `agile-infinity-324612.estudo_de_caso.dailyactivity` AS activity
+INNER JOIN
+  `agile-infinity-324612.estudo_de_caso.sleep_day_cleaned` AS sleep
+ON
+  CAST(activity.Id AS STRING) = sleep.Id 
+  AND activity.ActivityDate = CAST(sleep.SleepTimestamp AS DATE)
+WHERE
+  activity.TotalSteps > 0
+ORDER BY
+  minutos_sedentarios_acordado DESC
+LIMIT 50;
+---
+## Houve o encontro de outliers, então irei calcular as médias para esse grupo de usuários.
+
+SELECT
+  AVG(activity.SedentaryMinutes) AS media_total_sedentario,
+  AVG(sleep.TotalMinutesAsleep) AS media_minutos_dormindo,
+  AVG(activity.SedentaryMinutes - sleep.TotalMinutesAsleep) AS media_sedentario_acordado,
+FROM
+  `agile-infinity-324612.estudo_de_caso.dailyactivity` AS activity
+INNER JOIN
+  `agile-infinity-324612.estudo_de_caso.sleep_day_cleaned` AS sleep
+ON
+  CAST(activity.Id AS STRING) = sleep.Id
+  AND activity.ActivityDate = CAST(sleep.SleepTimestamp AS DATE)
+WHERE
+ activity.TotalSteps > 0 AND sleep.TotalMinutesAsleep > 30;
+---
+

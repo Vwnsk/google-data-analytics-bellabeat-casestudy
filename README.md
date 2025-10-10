@@ -36,3 +36,6 @@ The final phase consisted of translating the insights into business strategy. Ba
 "Bellabeat Community": An engagement platform to educate on features and strengthen the brand.
 
 Each recommendation was directly supported by data and focused on generating value for both the user and the company.
+
+
+![Looker Estudo_de_Caso_TCC_Google_Coursera_page-0001](https://github.com/user-attachments/assets/5df1c0af-1666-47fc-b8ac-7e0c3cca3d7a)

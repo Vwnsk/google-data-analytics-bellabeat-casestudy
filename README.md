@@ -1,41 +1,38 @@
 # google-data-analytics-bellabeat-casestudy
-Case Study Bellabeat - Conclusion Project Google Data Analytics
 
-The 6 Phases of the Data Analysis Process
-This project followed the six phases of the data analysis process to ensure a structured approach, from defining the business problem to delivering strategic recommendations.
+As 6 Fases do Processo de Análise de Dados
+Este projeto seguiu as seis fases do processo de análise de dados para garantir uma abordagem estruturada, desde a definição do problema de negócio até a entrega de recomendações estratégicas.
 
-1. Ask Phase
-The project began with a clear business task requested by Bellabeat's leadership: to analyze smart fitness device usage data to identify trends and, based on them, propose new marketing strategies to drive company growth. The primary objective was to turn raw data into actionable business insights.
+1. Fase de Perguntar (Ask)
+O projeto iniciou com uma clara tarefa de negócio solicitada pela liderança da Bellabeat: analisar dados de uso de dispositivos de fitness para identificar tendências e, com base nelas, propor novas estratégias de marketing para impulsionar o crescimento da empresa. O objetivo principal era transformar dados brutos em insights acionáveis para o negócio.
 
-2. Prepare Phase
-In this phase, a public dataset from Kaggle (Fitbit Fitness Tracker Data) containing data from 33 users was used. Preparation involved a critical analysis of the data source, where its main strengths (data granularity) and weaknesses, such as the limited sample size and the fact that the data is from 2016, were identified. This initial assessment was crucial for contextualizing future findings.
+2. Fase de Preparar (Prepare)
+Nesta fase, utilizamos um conjunto de dados públicos do Kaggle (Fitbit Fitness Tracker Data) contendo dados de 33 usuários. A preparação envolveu uma análise crítica da fonte de dados, onde identificamos suas principais forças (granularidade dos dados) e fraquezas, como o tamanho limitado da amostra e o fato de os dados serem de 2016. Essa avaliação inicial foi crucial para contextualizar as futuras descobertas.
 
-3. Process Phase
-This was the most technically challenging phase. The data was uploaded to Google BigQuery for processing with SQL. I faced and solved several import issues, including inconsistencies in CSV file delimiters (some used commas, others semicolons) and data type detection errors. The solution involved manually defining the table schemas, ensuring the integrity and proper structuring of the data for analysis. I also performed data cleaning and formatting on the date columns, converting them from STRING to TIMESTAMP to enable time-series analysis.
+3. Fase de Processar (Process)
+Esta foi a fase tecnicamente mais desafiadora. Os dados foram carregados no Google BigQuery para processamento com SQL. Enfrentei e solucionei diversos problemas de importação, incluindo inconsistências nos delimitadores dos arquivos CSV (alguns usavam vírgulas, outros ponto e vírgula) e erros de detecção de tipo de dados. A solução envolveu a definição manual do esquema das tabelas, garantindo a integridade e a correta estruturação dos dados para a análise. Também realizei a limpeza e formatação das colunas de data, convertendo-as de STRING para TIMESTAMP para permitir análises temporais.
 
-4. Analyze Phase
-With the data cleaned, the analysis focused on discovering behavioral patterns. The first major finding was that users spent, on average, more than 16 hours a day in a sedentary state. I investigated the hypothesis that this was a measurement error (e.g., users not wearing the device 24/7), but the data proved that the usage time was for the full day. Deepening the analysis with a JOIN between activity and sleep data, I uncovered the main insight: even after subtracting the ~7 hours of sleep, there were still almost 5 hours of inactivity during the waking day. Furthermore, I confirmed a strong positive correlation between total steps and calories burned.
+4. Fase de Analisar (Analyze)
+Com os dados limpos, a análise focou em descobrir padrões de comportamento. A primeira grande descoberta foi que os usuários passavam, em média, mais de 16 horas por dia em estado sedentário. Investiguei a hipótese de que isso seria um erro de medição (ex: usuários não usando o dispositivo 24h), mas os dados provaram que o tempo de uso era integral. Aprofundando a análise com um JOIN entre dados de atividade e sono, descobri o insight principal: mesmo subtraindo as ~7 horas de sono, restavam quase 5 horas de inatividade durante o dia. Além disso, confirmei uma forte correlação positiva entre o total de passos e as calorias queimadas.
 
-5. Share Phase
-To communicate the findings effectively, I connected BigQuery to Looker Studio and created a visual dashboard. The visualizations included:
+5. Fase de Compartilhar (Share)
+Para comunicar as descobertas de forma eficaz, conectei o BigQuery ao Looker Studio e criei um dashboard visual. As visualizações incluíram:
 
-Scorecards to highlight the average distribution of minutes by activity type.
+Cartões de Pontuação para destacar a distribuição média de minutos por tipo de atividade.
 
-A Scatter Plot to illustrate the relationship between steps and calories.
+Um Gráfico de Dispersão para ilustrar a relação entre passos e calorias.
 
-A Comparative Bar Chart to show the difference between sleep time and awake sedentary time.
-These visuals were essential for telling the data's story in a clear and impactful way.
+Um Gráfico de Barras Comparativo para mostrar a diferença entre o tempo de sono e o tempo sedentário acordado.
+Esses visuais foram essenciais para contar a história dos dados de forma clara e impactante.
 
-6. Act Phase
-The final phase consisted of translating the insights into business strategy. Based on the findings, I developed three strategic recommendations for Bellabeat:
+6. Fase de Agir (Act)
+A fase final consistiu em traduzir os insights em estratégia de negócio. Com base nas descobertas, elaborei três recomendações estratégicas para a Bellabeat:
 
-"Active Wellness Journey": A feature in the app to combat daily sedentary time with smart notifications.
+"Jornada de Bem-Estar Ativo": Uma funcionalidade no app para combater o sedentarismo diário com notificações inteligentes.
 
-"Premium Sleep Assistant": An evolution of the sleep feature to drive the subscription service.
+"Assistente de Sono Premium": Uma evolução da funcionalidade de sono para impulsionar o serviço de assinatura.
 
-"Bellabeat Community": An engagement platform to educate on features and strengthen the brand.
-
-Each recommendation was directly supported by data and focused on generating value for both the user and the company.
+"Comunidade Bellabeat": Uma plataforma de engajamento para educar sobre as funcionalidades e fortalecer a marca.
 
 
 ![Looker Estudo_de_Caso_TCC_Google_Coursera_page-0001](https://github.com/user-attachments/assets/5df1c0af-1666-47fc-b8ac-7e0c3cca3d7a)
